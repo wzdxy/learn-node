@@ -12,7 +12,7 @@ app.get('/',function(req,res,next){
         }
         var $=cheerio.load(sres.text);
         var items=[];
-        $('#topic_list .topic_title').each(function(idx,element){
+        $('#topic_list .topic_title').each(function(idx,element){                   //获取文章标题和链接
             var $element=$(element);
             items.push({
                 title:$element.attr('title'),
@@ -20,7 +20,7 @@ app.get('/',function(req,res,next){
             });
         });
 
-        $('#topic_list .user_avatar img').each(function(idx,element){
+        $('#topic_list .user_avatar img').each(function(idx,element){               //获取作者头像图中的作者名
                 var $element=$(element);
                 items[idx].author=$element.attr('title');
         });
