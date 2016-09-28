@@ -70,3 +70,35 @@ app.get('/example/d', [cb0, cb1], function (req, res, next) {
 ```
 
 ### 6、路由响应
+
+```js
+res.download() 	        //提示下载文件。
+res.end() 	            //终结响应处理流程。
+res.json() 	            //发送一个 JSON 格式的响应。
+res.jsonp() 	        //发送一个支持 JSONP 的 JSON 格式的响应。
+res.redirect() 	        //重定向请求。
+res.render() 	        //渲染视图模板。
+res.send() 	            //发送各种类型的响应。
+res.sendFile 	        //以八位字节流的形式发送文件。
+res.sendStatus()        //设置响应状态代码，并将其以字符串形式作为响应体的一部分发送。
+```
+
+### 7、链式路由句柄 **`express.Router`**
+
+```js
+app.route('/book')
+  .get(function(req, res) {
+    res.send('Get a random book');
+  })
+  .post(function(req, res) {
+    res.send('Add a book');
+  });
+```
+
+### 8、模块化路由句柄 **`express.Router`**
+
+```js
+
+```
+
+[书签:Express路由](http://www.expressjs.com.cn/guide/routing.html)
