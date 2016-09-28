@@ -30,6 +30,13 @@ app.get('/user', function (req, res) {
   res.send('Got a GET request at /user');
 });
 
+app.get('/next', function (req, res, next) {
+  console.log('response will be sent by the next function ...');
+  next();
+}, function (req, res) {
+  res.send('Hello from B!');
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
