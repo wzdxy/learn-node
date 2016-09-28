@@ -10,6 +10,27 @@ var users = require('./routes/users');
 
 var app = express();
 
+// 对网站首页的访问返回 "Hello World!" 字样
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+// 网站首页接受 POST 请求
+app.post('/', function (req, res) {
+  res.send('Got a POST request');
+});
+
+// /user 节点接受 PUT 请求
+app.put('/user', function (req, res) {
+  res.send('Got a PUT request at /user');
+});
+
+// /user 节点接受 DELETE 请求
+app.get('/user', function (req, res) {
+  res.send('Got a GET request at /user');
+});
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,6 +42,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static',express.static('public'));
+app.use('/static',express.static('static'));
 
 app.use('/', routes);
 app.use('/users', users);
