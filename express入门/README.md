@@ -83,7 +83,7 @@ res.sendFile 	        //以八位字节流的形式发送文件。
 res.sendStatus()        //设置响应状态代码，并将其以字符串形式作为响应体的一部分发送。
 ```
 
-### 7、链式路由句柄 **`express.Router`**
+### 7、链式路由句柄 **`app.router`**
 
 ```js
 app.route('/book')
@@ -98,7 +98,48 @@ app.route('/book')
 ### 8、模块化路由句柄 **`express.Router`**
 
 ```js
-
+var express = require('express');
+var router = express.Router();
+router.use(function timeLog(req, res, next) {       // 该路由使用的中间件
+  console.log('Time: ', Date.now());
+  next();
+});
+router.get('/', function(req, res) {                // 定义网站主页的路由
+  res.send('Birds home page');
+});
+router.get('/about', function(req, res) {           //定义birds
+  res.send('About birds');
+});
+module.exports = router;
+```
+```js
+var birds = require('./birds');
+app.use('/birds', birds);                            //可处理birds页面和birds/about页面
 ```
 
-[书签:Express路由](http://www.expressjs.com.cn/guide/routing.html)
+### 9、中间件
+- 分类：应用中间件，路由中间件，错误处理中间件，内置中间件，第三方中间件
+- 应用级中间件：`app.use()`、`app.METHOD`
+```js
+var app=express();
+app.use(function(req,res,next)){          //无挂载路径，app的每个请求都会执行
+  console,log('Time',Date.now);
+  next();
+}
+app.get('/user/:id',function(req,res,next){     //处理 /user/:id 的GET请求
+  res.send('USER');
+})
+```
+
+- 路由级中间件
+
+
+
+
+
+
+
+
+
+
+[书签:Express路由](http://www.expressjs.com.cn/guide/using-middleware.html)

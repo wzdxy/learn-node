@@ -10,6 +10,11 @@ var users = require('./routes/users');
 
 var app = express();
 
+app.use(function timeLog(req, res, next) {
+  console.log('Time: ', Date.now());
+  next();
+});
+
 // 对网站首页的访问返回 "Hello World!" 字样
 app.get('/', function (req, res) {
   res.send('Hello World!');
