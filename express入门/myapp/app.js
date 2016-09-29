@@ -17,7 +17,10 @@ app.use(function timeLog(req, res, next) {
 
 // 对网站首页的访问返回 "Hello World!" 字样
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  // res.send('Hello World!');
+  // res.render('index',{title:'Hey',message:'Hello there!'});
+  console.log(req);
+  res.render('index',{title:req.query.t,message:req.query.m});
 });
 
 // 网站首页接受 POST 请求

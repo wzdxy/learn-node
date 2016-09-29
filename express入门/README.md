@@ -131,15 +131,58 @@ app.get('/user/:id',function(req,res,next){     //处理 /user/:id 的GET请求
 })
 ```
 
-- 路由级中间件
+- 路由级中间件`router.use()`、`route.METHOD`
+```js
+var app=express();
+var Router=express.Router();
+router.use(function (req, res, next) {
+  console.log('Time:', Date.now());
+  next();
+});
+router.get('/user/:id', function (req, res, next) {
+  console.log(req.params.id);
+  res.render('special');
+});
+```
+- 错误处理中间件
+```js
+  app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+```
 
+- 内置中间件 `express.static(root,[options])`，负责托管静态资源
 
+- 第三方中间件
+```
+$ npm install cookie-parser
+```
+```js
+var express = require('express');
+var app = express();
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());        // 加载用于解析 cookie 的中间件
+//第三方中间件既可以在应用级加载，也可以在路由级加载
+```
 
+10、模版引擎 `Jade`
 
+```js
+/*index.jade*/
+html
+  head
+    title!= title
+  body
+    h1!= message
+```
 
-
-
-
+```js
+app.get('/', function (req, res) {
+  res.render('index',{title:req.query.t,message:req.query.m});
+});
+//访问http://localhost:3000/?t=hey&m=hello_Jade
+```
 
 
 [书签:Express路由](http://www.expressjs.com.cn/guide/using-middleware.html)
