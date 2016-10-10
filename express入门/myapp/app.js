@@ -10,6 +10,15 @@ var users = require('./routes/users');
 
 var app = express();
 
+
+var db = require('mongoskin').db('localhost:27017/animals');
+
+db.collection('mamals').find().toArray(function(err, result) {
+  if (err) throw err;
+  console.log(result);
+});
+
+
 app.use(function timeLog(req, res, next) {
   console.log('Time: ', Date.now());
   next();
@@ -19,7 +28,7 @@ app.use(function timeLog(req, res, next) {
 app.get('/', function (req, res) {
   // res.send('Hello World!');
   // res.render('index',{title:'Hey',message:'Hello there!'});
-  console.log(req);
+  console.log();
   res.render('index',{title:req.query.t,message:req.query.m});
 });
 
