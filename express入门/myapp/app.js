@@ -7,16 +7,18 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var db=require('./db.js');
 
 var app = express();
 
 
-var db = require('mongoskin').db('localhost:27017/animals');
+// var db = require('mongoskin').db('localhost:27017/animals');
+// var db = require('mongodb').Db('localhost:27017/test');
 
-db.collection('mamals').find().toArray(function(err, result) {
-  if (err) throw err;
-  console.log(result);
-});
+// db.collection('users').find().toArray(function(err, result) {
+//   if (err) throw err;
+//   console.log(result);
+// });
 
 
 app.use(function timeLog(req, res, next) {
@@ -29,7 +31,8 @@ app.get('/', function (req, res) {
   // res.send('Hello World!');
   // res.render('index',{title:'Hey',message:'Hello there!'});
   console.log();
-  res.render('index',{title:req.query.t,message:req.query.m});
+  res.send('hello');
+  // res.render('index',{title:req.query.t,message:req.query.m});
 });
 
 // 网站首页接受 POST 请求
@@ -57,6 +60,8 @@ app.get('/next', function (req, res, next) {
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'html');
+// app.engine('.html',require('ejs').__express);
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -105,3 +110,10 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
+var server=app.listen(3000,function(){
+    var host=server.address().address;
+    var port=server.address().port;
+    console.log('listening '+host+':'+port);
+})
