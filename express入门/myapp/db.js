@@ -26,6 +26,7 @@ var db = new Db('test', new Server('localhost', 27017));
 
 db.open(function(err, db) {
 	console.log('dbopen');
+	// console.log(this.collection);
 	db.collection('users',{safe:true},function(err,collection){
 		if(err)throw err;
 		collection.find().toArray(function(e,docs){

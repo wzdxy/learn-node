@@ -40,12 +40,11 @@ app.post('/', function (req, res) {
   res.send('Got a POST request');
 });
 
-// /user 节点接受 PUT 请求
-app.put('/user', function (req, res) {
-  res.send('Got a PUT request at /user');
-});
+// // /user 节点接受 PUT 请求
+// app.put('/user', function (req, res) {
+//   res.send('Got a PUT request at /user');
+// });
 
-// /user 节点接受 DELETE 请求
 app.get('/user', function (req, res) {
   res.send('Got a GET request at /user');
 });
@@ -59,10 +58,10 @@ app.get('/next', function (req, res, next) {
 
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'html');
-// app.engine('.html',require('ejs').__express);
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
+app.engine('.html',require('ejs').__express);
+// app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -113,6 +112,7 @@ module.exports = app;
 
 
 var server=app.listen(3000,function(){
+    console.log('tring...');
     var host=server.address().address;
     var port=server.address().port;
     console.log('listening '+host+':'+port);
