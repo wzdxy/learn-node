@@ -2,12 +2,19 @@
 <html>
   <head>
 	<title>my index</title>
-	<link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-	<h1>Hello World</h1>
-	<p>Welcome to</p>
-	<p><a href="login">登陆</a></p>
+		<h1>Blog</h1>
+		<p>Welcome</p>
+		<p><a href="login">登录</a></p>
+		<ul>
+			<% for(var i=0;i<array.length;i++){ %>
+				<li>
+					<h2><%=array[i].title %></h2>
+					<p><%=array[i].text %></p>						
+				</li>
+			<%}%>
+		</ul>
   </body>
 </html>
 

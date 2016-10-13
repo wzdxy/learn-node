@@ -1,47 +1,62 @@
 var express = require('express');
 var router = express.Router();
-// var user=require('d:/data/db').user;
-// var MongoClient = require('mongodb').MongoClient;
-
-var Db = require('mongodb').Db,
-    Server = require('mongodb').Server;
-var db = new Db('test', new Server('localhost', 27017));
-var user = db.collection('users');
+var db=require('../db.js');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function(req, res) {
+  let collection=db.collection('blogs');
+  let array=[]
+  collection.find({}).toArray(function(err,result){
+    console.dir(result);
+    array=result;
+    res.render('index',{array:array});
+  })
+});
+
+router.get('/index', function(req, res) {
+  let collection=db.collection('blogs');
+  let array=[]
+  collection.find({}).toArray(function(err,result){
+    console.dir(result);
+    array=result;
+    res.render('index',{array:array});
+  })
 });
 
 router.get('/login',function(req,res){
   res.render('login',{title:'login'});
 })
 
-router.post('/ucenter',function(req,res){
-  var query='{"name":"'+req.body.name+'","pw":"'+req.body.password+'"}';
-  // var query={name:req.body.name,pw:req.body.password};
-  // console.log(user.find(query));
-  
-  user.find(query).toArray(function(err,result){
-    if(err){
-      console.log('Error'+err);
-      return;
-    }
-    console.log(result);
-  })
 
-  
-  // (function(){
-  //   user.count(query,function(err,doc){
-  //     if(doc==1){
-  //       console.log(query.name+':登录');
-  //       res.render('ucenter',{title:'ucenter'});
-  //     }else{
-  //       console.log(query.name+':失败');
-  //       res.redirect('/');
-  //     }
-  //   })
-  // })(query);
+router.get('/ucenter',function(req,res){
+  res.render('index',{title:'ERROR'});
 })
 
+router.post('/ucenter',function(req,res){
+  var query={name:req.body.name,pw:req.body.password};
+  var collection = db.collection('users');
+  collection.find(query).toArray(function(err,result){
+    if(result.length==1){
+      console.dir(result);
+      res.render('usercenter',{title:'UserCenter',name:query.name});
+    }else{
+      res.redirect('/')
+    }
+  })
+});
+
+router.post('/postblog',function(req,res){
+    let text=req.body.text;
+    let title=req.body.title;
+    console.log(title);
+    console.log(text);
+    var collection = db.collection('blogs');
+    collection.insert({
+      title:title,
+      text:text
+    },function(){
+      console.log('数据库写入完成');
+    })
+    res.render('postsuccess',{text:text});
+});
 module.exports = router;

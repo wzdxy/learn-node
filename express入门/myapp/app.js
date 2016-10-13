@@ -7,18 +7,11 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
 var db=require('./db.js');
 
 var app = express();
 
-
-// var db = require('mongoskin').db('localhost:27017/animals');
-// var db = require('mongodb').Db('localhost:27017/test');
-
-// db.collection('users').find().toArray(function(err, result) {
-//   if (err) throw err;
-//   console.log(result);
-// });
 
 
 app.use(function timeLog(req, res, next) {
@@ -27,13 +20,14 @@ app.use(function timeLog(req, res, next) {
 });
 
 // 对网站首页的访问返回 "Hello World!" 字样
-app.get('/', function (req, res) {
-  // res.send('Hello World!');
-  // res.render('index',{title:'Hey',message:'Hello there!'});
-  console.log();
-  res.send('hello');
-  // res.render('index',{title:req.query.t,message:req.query.m});
-});
+// app.get('/', function (req, res) {
+//   console.log('GET request index');
+//   let collection=db.collection('blogs');
+//   let array=collection.find({}).toArray(function(err,result){
+//     console.dir(result);
+//   })
+//   res.render('index');
+// });
 
 // 网站首页接受 POST 请求
 app.post('/', function (req, res) {
@@ -112,8 +106,7 @@ module.exports = app;
 
 
 var server=app.listen(3000,function(){
-    console.log('tring...');
     var host=server.address().address;
     var port=server.address().port;
-    console.log('listening '+host+':'+port);
+    console.log('listening :'+port);
 })
