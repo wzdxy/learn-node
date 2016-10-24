@@ -6,12 +6,12 @@
   <body>
 		<h1>Blog</h1>
 		<p>Welcome</p>
-		<p><a href="login">登录</a></p>
+		<p><a href="login">用户中心</a></p>
 		<ul>
 			<% for(var i=0;i<array.length;i++){ %>
 				<li>
-					<h2><%=array[i].title %></h2>
-					<p><%=array[i].text %></p>						
+					<a href='/blog?blogId=<%=array[i].uid%>'><h2><%=array[i].title %></h2></a>					
+					<p><%=array[i].text %></p>	
 				</li>
 			<%}%>
 		</ul>
