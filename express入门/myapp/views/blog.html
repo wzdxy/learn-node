@@ -7,12 +7,26 @@
 <body>
     <h2><%=title%></h2>
     <p><%=text%></p>
-    <form action="/" method="get">
-        <textarea type="text" name="text"></textarea>
+    <form  id="comment-form" blogid="<%=blogId%>"><!--action="blog/comment" method="post"-->
+        昵称：<input type="text" name="name" id='name'><br>
+        邮箱：<input type="text" name="email" id='email'><br>
+        内容：<textarea type="text" name="text" id='text'></textarea>
         <br>
-        <button type="submit">提交评论</button>
+        <button id='comment-btn' type="button">提交评论</button>
     </form>
     <br>
     <a href="/">返回首页</a>
 </body>
+<script type="text/javascript">
+    document.getElementById('comment-btn').onclick=function(){
+        form=document.getElementById('comment-form');
+        let data=new FormData(form);
+        data.append('postid',"<%=blogId%>");
+        //data.append('name',"<%=blogId%>");
+        let xhr=new XMLHttpRequest();
+        
+        xhr.open("post","blog/comment",true);
+        xhr.send(data);
+    }
+</script>
 </html>
