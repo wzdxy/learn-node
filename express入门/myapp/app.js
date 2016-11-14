@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var partials = require('express-partials');
 
 var routes = require('./routes/index');
 // var users = require('./routes/users');
@@ -21,46 +22,36 @@ app.use(function timeLog(req, res, next) {
   next();
 });
 
-// 对网站首页的访问返回 "Hello World!" 字样
-// app.get('/', function (req, res) {
-//   console.log('GET request index');
-//   let collection=db.collection('blogs');
-//   let array=collection.find({}).toArray(function(err,result){
-//     console.dir(result);
-//   })
-//   res.render('index');
-// });
 
-// 网站首页接受 POST 请求
-app.post('/', function (req, res) {
-  res.send('Got a POST request');
-});
-
-// // /user 节点接受 PUT 请求
-// app.put('/user', function (req, res) {
-//   res.send('Got a PUT request at /user');
-// });
-
-app.get('/user', function (req, res) {
-  res.send('Got a GET request at /user');
-});
-
-app.get('/next', function (req, res, next) {
-  console.log('response will be sent by the next function ...');
+app.use('/',function (req, res,next) {
+  console.log('app.use'+req.originalUrl);
+  console.log('Cookies: ', req.cookies);
   next();
-}, function (req, res) {
-  res.send('Hello from B!');
-});
+})
 
+// app.all('/',function (req, res) {
+//   console.log('Cookies: ', req.cookies);
+//   next();
+// })
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
+// app.get('/user', function (req, res) {
+//   res.send('Got a GET request at /user');
+// });
+//
+// app.get('/next', function (req, res, next) {
+//   console.log('response will be sent by the next function ...');
+//   next();
+// }, function (req, res) {
+//   res.send('Hello from B!');
+// });
+
 app.set('view engine', 'html');
 app.engine('.html',require('ejs').__express);
-// app.set('view engine', 'jade');
+app.use(partials());
+
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

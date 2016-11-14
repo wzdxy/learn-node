@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
   let collection=db.collection('blogs');
   let array=[]
   collection.find({}).toArray(function(err,result){
-    console.dir(result);
+    // console.dir(result);
     array=result;
     res.render('index',{array:array});
   })
@@ -17,7 +17,7 @@ router.get('/index', function(req, res) {
   let collection=db.collection('blogs');
   let array=[]
   collection.find({}).toArray(function(err,result){
-    console.dir(result);
+    // console.dir(result);
     array=result;
     res.render('index',{array:array});
   })

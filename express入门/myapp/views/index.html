@@ -10,8 +10,9 @@
 		<ul>
 			<% for(var i=0;i<array.length;i++){ %>
 				<li>
-					<a href='/blog?blogId=<%=array[i].uid%>'><h2><%=array[i].title %></h2></a>					
-					<p><%=array[i].text %></p>	
+					<a href='/blog?blogId=<%=array[i].uid%>'><h3><%=array[i].title %></h3></a>
+					<%str=array[i].text,ln=str.length%>
+					<p><%=str.slice(0,ln>140?140:ln)%><%=ln>140?'...':''%><a href="/blog?blogId='+array[i].uid+'"><%=ln>140?'more':''%></a></p>
 				</li>
 			<%}%>
 		</ul>

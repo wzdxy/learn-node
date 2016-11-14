@@ -17,14 +17,14 @@ router.get('/', function (req, res) {
     let commentResult=[];
     let commentcollection=db.collection('comment');
     commentcollection.find(commentQuery).toArray(function (err, result) {
-        console.dir(result);
+        // console.dir(result);
         commentResult=result;
     })
 
     let blogQuery = {uid: blogId};
     let blogscollection = db.collection('blogs');
     blogscollection.find(blogQuery).toArray(function (err, result) {
-        console.dir(result);
+        // console.dir(result);
         res.render('blog', {title: result[0].title, text: result[0].text, blogId: blogId,comments:commentResult});
     });
 
