@@ -16,10 +16,12 @@ router.get('/', function(req, res) {
 router.get('/index', function(req, res) {
   let collection=db.collection('blogs');
   let array=[]
+  let user=0;
+  if(req.session.sign==true)user=req.session.username;
   collection.find({}).toArray(function(err,result){
     // console.dir(result);
     array=result;
-    res.render('index',{array:array});
+    res.render('index',{array:array,user:user});
   })
 });
 

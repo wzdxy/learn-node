@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
-
+var session = require('express-session');
 var routes = require('./routes/index');
 // var users = require('./routes/users');
 var blog = require('./routes/blog');
@@ -22,28 +22,21 @@ app.use(function timeLog(req, res, next) {
   next();
 });
 
+app.use(cookieParser());
+app.use(session({
+  secret: 'secret_user',
+  name: 'name_user',
+  cookie:{maxAge:15*60*1000},
+  httpOnly:true,
+  resave:true,
+  saveUninitialized:true
+}));
 
 app.use('/',function (req, res,next) {
-  console.log('app.use'+req.originalUrl);
-  console.log('Cookies: ', req.cookies);
+  if(req.cookies.name_user==undefined)res.cookie('name_user',req.sessionID,{maxAge:24*3600});
   next();
 })
 
-// app.all('/',function (req, res) {
-//   console.log('Cookies: ', req.cookies);
-//   next();
-// })
-
-// app.get('/user', function (req, res) {
-//   res.send('Got a GET request at /user');
-// });
-//
-// app.get('/next', function (req, res, next) {
-//   console.log('response will be sent by the next function ...');
-//   next();
-// }, function (req, res) {
-//   res.send('Hello from B!');
-// });
 
 app.set('view engine', 'html');
 app.engine('.html',require('ejs').__express);
@@ -55,7 +48,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static',express.static('public'));
 app.use('/static',express.static('static'));
