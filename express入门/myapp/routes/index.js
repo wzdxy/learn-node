@@ -5,8 +5,8 @@ var db=require('../db.js');
 /* GET home page. */
 router.get('/', function(req, res) {
   let collection=db.collection('blogs');
-  let array=[]
-  collection.find({}).toArray(function(err,result){
+  let array=[];
+  collection.find({hidden:false}).toArray(function(err,result){
     // console.dir(result);
     array=result;
     res.render('index',{array:array});
